@@ -1,0 +1,2 @@
+General purpose library for setting up image processing experiments via
+hadoop. This library will one day decide whether it uses hadoop, dumbo,
