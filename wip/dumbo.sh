@@ -1,0 +1,1 @@
+dumbo start ./mrblur.py -hadoop /home/cpatrick/Projects/MapReduce/hadoop-0.21.0/ -input list.txt -output feather2 -cachefile hdfs://localhost:9000/user/cpatrick/imgs#imgs -getpath yes -libjar /home/cpatrick/Projects/MapReduce/feathers/dist/feathers.jar
