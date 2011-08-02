@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="bintoseq" default="main">
+    <description>
+        Java class built to be run in Hadoop map-reduce.  Takes in a file that is in
+        hdfs, that file should have URIs pointing to files in hdfs.  These files will
+        then be combined into a SequenceFile in HDFS.
+    </description>
+
+    <property environment="env"/>
+    <property name="version" value="1.0" />
+    <property name="hadoop.home" location="ENTER_YOUR_HADOOP_LOCATION"/>
+
+    <property name="src.dir"     value="src"/>
+    <property name="build.dir"   value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir"     value="dist"/>
+
+    <path id="build.classpath">
+        <fileset dir="${hadoop.home}" includes="hadoop*.jar"/>
+        <fileset dir="${hadoop.home}" 
+                 includes="mapred/contrib/streaming/hadoop-*-streaming.jar" />
+        <fileset dir="${hadoop.home}" 
+                 includes="lib/*.jar" />
+    </path>
+
+
+
+
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${jar.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" 
+               classpathref="build.classpath"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" 
+             basedir="${classes.dir}">
+
+            <!-- define MANIFEST.MF -->
+            <manifest>
+                <attribute name="Built-By" value="${ant.project.name}" />
+                <attribute name="Created-By" value="${ant.project.name}" />
+                <attribute name="Implementation-Version" 
+                           value="${version}" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="main" depends="clean,jar"/>
+
+</project>
