@@ -9,7 +9,7 @@
 
     <property environment="env"/>
     <property name="version" value="1.0" />
-    <property name="hadoop.home" location="ENTER_YOUR_HADOOP_LOCATION"/>
+    <property name="hadoop.home" location="/home/mgrauer/dev/bin/hadoop-0.20.203.0/"/>
 
     <property name="src.dir"     value="src"/>
     <property name="build.dir"   value="build"/>
@@ -55,5 +55,15 @@
     </target>
 
     <target name="main" depends="clean,jar"/>
+
+    <target name="rundir">
+       <java fork="true" classname="com.kitware.kwmapreduce.DirToSequenceFile"> 
+         <classpath>
+           <path refid="build.classpath"/>
+           <pathelement location="${classes.dir}"/>
+         </classpath>
+       </java>
+    </target>
+
 
 </project>
